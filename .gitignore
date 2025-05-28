@@ -7,11 +7,19 @@ __pycache__/
 logs/
 *.log
 
+# Ignoriere alles im output-Ordner …
+output/*
+
+# … aber NICHT das Verzeichnis chroma_db
+!output/chroma_db/
+!output/chroma_db/**
+
 # Local data
 data/
-output/
 metadata/
 database/
+prompts/prompts/Chatverlauf/*
+!prompts/.gitkeep
 
 # VS Code settings
 .vscode/
