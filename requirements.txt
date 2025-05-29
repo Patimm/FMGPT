@@ -10,7 +10,6 @@ numpy==1.26.4
 ollama==0.4.8
 torch==2.7.0
 scikit-learn==1.6.1
-PyMuPDF==1.23.3
 deep-translator==1.11.4
 tqdm==4.66.1
 python-dotenv==1.1.0
