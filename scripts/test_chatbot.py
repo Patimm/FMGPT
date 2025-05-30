@@ -1,3 +1,7 @@
+"""
+Script to test the FMGPT chatbot logic in isolation.
+"""
+
 import os
 import openai
 import chromadb

@@ -1,3 +1,7 @@
+"""
+Script for chunk utilities for FMGPT.
+"""
+
 import os
 import json
 import numpy as np

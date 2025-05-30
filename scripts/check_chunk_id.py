@@ -1,3 +1,7 @@
+"""
+Script to check chunk IDs for FMGPT data integrity and debugging.
+"""
+
 import json
 
 # === Konfiguration ===

@@ -1,3 +1,7 @@
+"""
+Script to chunk text sources into semantically meaningful pieces for FMGPT.
+"""
+
 import os
 import json
 import re

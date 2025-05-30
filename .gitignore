@@ -18,8 +18,9 @@ output/*
 data/
 metadata/
 database/
-prompts/prompts/Chatverlauf/*
-!prompts/.gitkeep
+
+# Nur den Chatverlauf in prompts ignorieren
+prompts/Chatverlauf/
 
 # VS Code settings
 .vscode/

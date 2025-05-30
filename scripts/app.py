@@ -1,33 +1,30 @@
+"""
+Main Streamlit app for FMGPT: Football Manager RAG Chatbot.
+Handles UI, user input, retrieval, and LLM interaction.
+"""
+
 import streamlit as st
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 import requests
 import os
 import json
+from dotenv import load_dotenv  # NEW: load environment variables from .env
 
 from prompt_protection import enthält_prompt_injection, ollama_guard_check, chunk_sicher, logge_verdacht
+from utils import speichere_chatverlauf  # moved from local definition
+from logging_utils import setup_logging, log_event
+
+# === Load environment variables from .env ===
+load_dotenv()
 
 # === Konfiguration ===
-CHROMA_PATH = "./output/chroma_db"
-COLLECTION_NAME = "chunks_semantic"
-EMBED_MODEL = "all-MiniLM-L6-v2"
-OLLAMA_MODEL = "mistral"
-OLLAMA_URL = "http://localhost:11434/api/generate"
-SPRACHE_FILTER = "de"
-
-# === Funktion: Speichern mit fortlaufender Nummerierung ===
-def speichere_chatverlauf(chat_history):
-    chatverlauf_ordner = "prompts/Chatverlauf"
-    os.makedirs(chatverlauf_ordner, exist_ok=True)
-    vorhandene = [
-        int(f.split("_")[-1].split(".")[0])
-        for f in os.listdir(chatverlauf_ordner)
-        if f.startswith("chat_") and f.endswith(".json")
-    ]
-    neue_nummer = max(vorhandene) + 1 if vorhandene else 1
-    pfad = os.path.join(chatverlauf_ordner, f"chat_{neue_nummer}.json")
-    with open(pfad, "w", encoding="utf-8") as f:
-        json.dump(chat_history, f, ensure_ascii=False, indent=2)
+CHROMA_PATH = os.getenv("CHROMA_PATH", "./output/chroma_db")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME", "chunks_semantic")
+EMBED_MODEL = os.getenv("EMBED_MODEL", "all-MiniLM-L6-v2")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "mistral")
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
+SPRACHE_FILTER = os.getenv("SPRACHE_FILTER", "de")
 
 # === Setup ChromaDB + Embedding
 client = chromadb.PersistentClient(path=CHROMA_PATH)
@@ -37,6 +34,9 @@ embed_fn = SentenceTransformerEmbeddingFunction(model_name=EMBED_MODEL)
 # === Session-State initialisieren
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
+
+# === Logging initialisieren ===
+setup_logging()
 
 # === UI ===
 st.title("⚽ Football Manager Chatbot")
@@ -96,6 +96,7 @@ if abschicken and frage.strip() != "":
             )
             antwort = response.json()["response"]
         except Exception as e:
+            log_event(f"Fehler bei der Kommunikation mit Ollama: {e}", level="error")
             st.error(f"Fehler bei der Kommunikation mit Ollama: {e}")
             antwort = "⚠️ Es gab ein Problem mit dem Modell."
 

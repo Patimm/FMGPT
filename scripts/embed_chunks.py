@@ -1,3 +1,7 @@
+"""
+Script to create embeddings for text chunks for FMGPT.
+"""
+
 import os
 import json
 import numpy as np

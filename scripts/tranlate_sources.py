@@ -1,3 +1,7 @@
+"""
+Script for translating sources for FMGPT.
+"""
+
 import os
 import json
 from tqdm import tqdm

@@ -1,3 +1,7 @@
+"""
+Script for ChromaDB testing utilities for FMGPT.
+"""
+
 import chromadb
 
 client = chromadb.PersistentClient(path="./output/chroma_test")

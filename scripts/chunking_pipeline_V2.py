@@ -1,3 +1,7 @@
+"""
+Script for advanced chunking pipeline (V2) for FMGPT.
+"""
+
 import os
 import json
 from tqdm import tqdm

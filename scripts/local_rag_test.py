@@ -1,3 +1,7 @@
+"""
+Local RAG logic for FMGPT without GUI. Used for testing and development.
+"""
+
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 import numpy as np

@@ -1,3 +1,7 @@
+"""
+Script for parsing text sources for FMGPT.
+"""
+
 import os
 import csv
 import fitz  # PyMuPDF

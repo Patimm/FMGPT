@@ -1,3 +1,7 @@
+"""
+Script to build the Chroma vector database from text sources for FMGPT.
+"""
+
 import os
 import json
 import math
